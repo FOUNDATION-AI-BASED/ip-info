@@ -44,7 +44,7 @@ Get your IP Info service up and running in minutes:
 3.  **Access the Web UI**:
     Open your browser and navigate to `http://localhost:8081`.
 
-For detailed installation instructions, including MaxMind GeoLite2 setup, please refer to the [Installation Guide](Installation.md).
+For detailed installation instructions, including MaxMind GeoLite2 setup, please refer to the [Installation Guide](INSTALLATION.md).
 
 ## License
 

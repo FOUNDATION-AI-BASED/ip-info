@@ -1,7 +1,8 @@
 # IP Info - Self-Hosted IP Information Service
 
-Welcome to IP Info, a powerful and self-hosted solution for retrieving comprehensive IP address information. This project provides a Docker-based alternative to services like ipinfo.io, giving you full control over your IP data and infrastructure.
+**Disclaimer:** This project is intended for self-hosted, internal use only and is not designed for exposure to the public internet without additional security measures. It does not include built-in protections against abuse or mass scanning. Users are responsible for implementing appropriate security controls if deploying in an accessible environment and are urged to use this tool ethically and responsibly.
 
+Welcome to IP Info, a powerful and self-hosted solution for retrieving comprehensive IP address information. This project provides a Docker-based alternative to services like ipinfo.io, giving you full control over your IP data and infrastructure.
 ## Table of Contents
 
 - [Features](#features)

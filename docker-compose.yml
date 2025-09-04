@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # API service
+  ipinfo-api:
+    build:
+      context: ./api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_HOST=ipinfo-db
+      - DB_PORT=5432
+      - DB_USER=ipuser
+      - DB_PASSWORD=ippassword
+      - DB_NAME=ipinfodb
+      - REDIS_HOST=ipinfo-cache
+      - REDIS_PORT=6379
+      - LOG_LEVEL=info
+      - RATE_LIMIT=100
+    depends_on:
+      - ipinfo-db
+      - ipinfo-cache
+    restart: always
+
+  # Database for IP data storage
+  ipinfo-db:
+    image: postgres:14-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=ipuser
+      - POSTGRES_PASSWORD=ippassword
+      - POSTGRES_DB=ipinfodb
+    restart: always
+
+  # Redis for caching
+  ipinfo-cache:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  # Updater service to keep IP databases current
+  ipinfo-updater:
+    build:
+      context: ./updater
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DB_HOST=ipinfo-db
+      - DB_PORT=5432
+      - DB_USER=ipuser
+      - DB_PASSWORD=ippassword
+      - DB_NAME=ipinfodb
+      - UPDATE_INTERVAL=86400  # Update databases daily (in seconds)
+      - MAXMIND_LICENSE_KEY=YOUR_LICENSE_KEY_HERE  # Add your actual license key here
+    depends_on:
+      - ipinfo-db
+    restart: always
+
+  # Web UI
+  ipinfo-ui:
+    build:
+      context: ./ui
+    ports:
+      - "8081:80"
+    depends_on:
+      - ipinfo-api
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
